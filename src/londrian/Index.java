@@ -5,6 +5,8 @@
  */
 package londrian;
 
+import koneksi.koneksi;
+
 /**
  *
  * @author junaidi
