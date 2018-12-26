@@ -3,20 +3,22 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package londrian;
+package frame;
 
-import koneksi.koneksi;
+import proses.koneksi;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
-
+import proses.proses_login;
 /**
  *
  * @author junaidi
  */
 public class login extends javax.swing.JFrame {
+
+    private proses_login proses_login;
 
     /**
      * Creates new form kembali
@@ -45,6 +47,7 @@ public class login extends javax.swing.JFrame {
         lbl_Judul2 = new javax.swing.JLabel();
         txt_username = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
+        lblNotifError = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -75,23 +78,23 @@ public class login extends javax.swing.JFrame {
                 .addGap(197, 197, 197)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(182, 182, 182)
-                        .addComponent(btn_login))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(105, 105, 105)
                         .addComponent(lbl_Judul))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lbl_Judul2)
-                            .addComponent(lbl_Judul1))
-                        .addGap(18, 18, 18)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txt_username)
-                            .addComponent(txt_pasword, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(34, 34, 34)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(273, Short.MAX_VALUE))
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btn_login)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lbl_Judul2)
+                                .addComponent(lbl_Judul1))
+                            .addGap(18, 18, 18)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(lblNotifError, javax.swing.GroupLayout.PREFERRED_SIZE, 186, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txt_username, javax.swing.GroupLayout.DEFAULT_SIZE, 232, Short.MAX_VALUE)
+                                .addComponent(txt_pasword)))))
+                .addContainerGap(211, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -108,9 +111,11 @@ public class login extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lbl_Judul2)
                     .addComponent(txt_pasword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(28, 28, 28)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblNotifError, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btn_login)
-                .addContainerGap(76, Short.MAX_VALUE))
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -129,22 +134,36 @@ public class login extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_loginActionPerformed
-        String sql = "SELECT * FROM admin WHERE username ='"+txt_username.getText()+"' and password = '"+txt_pasword.getText()+"';";
-        try {
-            koneksi kon = new koneksi();
-            kon.res = kon.stat.executeQuery(sql);
-           // atribut at;
-            if(kon.res.next()){
-                Utama in = new Utama();
-                in.setVisible(true);
-                this.setVisible(false);
-            }
-            else{
-                JOptionPane.showMessageDialog(null, "Login Gagal");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        String username = txt_username.getText();
+        String password = txt_pasword.getText();
+        proses_login = new proses_login(username, password);
+        if(proses_login.validasiLogin(username, password)) {
+            lblNotifError.setText("Berhasil");
+            Utama u = new Utama(username);
+            u.setVisible(true);
+            this.dispose();
+        } else {
+            lblNotifError.setText("Ulangi Lagi username dan password salah");
         }
+
+
+
+//String sql = "SELECT * FROM admin WHERE username ='"+txt_username.getText()+"' and password = '"+txt_pasword.getText()+"';";
+//        try {
+//            koneksi kon = new koneksi();
+//            kon.res = kon.stat.executeQuery(sql);
+//           // atribut at;
+//            if(kon.res.next()){
+//                Utama in = new Utama();
+//                in.setVisible(true);
+//                this.setVisible(false);
+//            }
+//            else{
+//                JOptionPane.showMessageDialog(null, "Login Gagal");
+//            }
+//        } catch (Exception e) {
+//            JOptionPane.showMessageDialog(null, e);
+//        }
     }//GEN-LAST:event_btn_loginActionPerformed
 
       
@@ -188,6 +207,7 @@ public class login extends javax.swing.JFrame {
     private javax.swing.JButton btn_login;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lblNotifError;
     private javax.swing.JLabel lbl_Judul;
     private javax.swing.JLabel lbl_Judul1;
     private javax.swing.JLabel lbl_Judul2;

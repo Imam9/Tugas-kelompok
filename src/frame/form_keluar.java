@@ -4,9 +4,9 @@
  * and open the template in the editor.
  */
 
-package londrian;
+package frame;
 
-import koneksi.koneksi;
+import proses.koneksi;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -141,29 +141,6 @@ public class form_keluar extends javax.swing.JFrame {
         // TODO add your handling code here:
         int row = tbl_londri.getSelectedRow();
         id = Integer.parseInt(tbl_londri.getModel().getValueAt(row,0).toString());
-//        int row = tbl_londrry.getSelectedRow();
-//        id = Integer.parseInt(tbl_londrry.getModel().getValueAt(row, 0).toString());
-//        txt_Nama.setText(tbl_londrry.getModel().getValueAt(row, 1).toString());
-//        txt_Masuk.setText(tbl_londrry.getModel().getValueAt(row, 2).toString());
-//        txt_Berat.setText(tbl_londrry.getModel().getValueAt(row, 3).toString());
-//        txt_harga.setText(tbl_londrry.getModel().getValueAt(row, 4).toString());
-//        cmbpket.setSelectedItem(tbl_londrry.getModel().getValueAt(row,5).toString());
-
-        //        int row = tbl_londrry.getSelectedRow();
-        //
-        //        atribut at = new atribut();
-        //
-        //        //double total = at.getTotal() ;
-        //
-        //        id = Integer.parseInt(tbl_londrry.getModel().getValueAt(row,0).toString());
-        //        txt_Nama.setText(tbl_londrry.getModel().getValueAt(row, 1).toString());
-        //
-        //        String namanya = tbl_londrry.getModel().getValueAt(row, 1).toString();
-        //        txt_Masuk.setText(tbl_londrry.getModel().getValueAt(row,2).toString());
-        //        txt_Berat.setText(tbl_londrry.getModel().getValueAt(row, 3).toString());
-        //        double total = at.getTotal();
-        //
-        //
 
     }//GEN-LAST:event_tbl_londriMouseClicked
 
@@ -242,19 +219,8 @@ public class form_keluar extends javax.swing.JFrame {
         
     }//GEN-LAST:event_txt_cariKeyTyped
 
-//    public void refresh(){
-//        DefaultTableModel model = (DefaultTableModel)tbl_londri.getModel();
-//        model.setRowCount(0);
-//      //  f.tampil();
-//        txt_cari.setText("");
-//    }
-    
     private void btn_ambilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ambilActionPerformed
-        // TODO add your handling code here:
-       //int hapus = JOptionPane.showConfirmDialog(null, "Yakin Hapus Data ?" ,"Hapus", 
-          //      JOptionPane.YES_NO_OPTION);
-        
-        //if(hapus==JOptionPane.YES_OPTION){
+
             try {
                 String delete = "DELETE FROM transaksi WHERE id_transakasi = '"+id+"'";
                 kon.stat.executeUpdate(delete);
